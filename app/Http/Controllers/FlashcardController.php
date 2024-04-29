@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Flashcard;
 use Illuminate\Http\Request;
 
 class FlashcardController extends Controller
@@ -18,7 +19,7 @@ class FlashcardController extends Controller
     }
 
     /**
-     * Show the form for creating a new flashcard.
+     * Show the form for creating a new flashcards.
      *
      * @return \Illuminate\Http\Response
      */
@@ -29,7 +30,7 @@ class FlashcardController extends Controller
     }
 
     /**
-     * Store a newly created flashcard in storage.
+     * Store a newly created flashcards in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -40,12 +41,12 @@ class FlashcardController extends Controller
             'front' => 'required|string',
             'back' => 'required|string',
         ]);
-    
+
         $flashcard = Flashcard::create([
             'front' => $request->front,
             'back' => $request->back,
         ]);
-    
+
         // Process tags
         $tags = explode(',', $request->tags);
         foreach ($tags as $tagName) {
@@ -53,25 +54,25 @@ class FlashcardController extends Controller
             $tag = Tag::firstOrCreate(['name' => $tagName]);
             $flashcard->tags()->attach($tag);
         }
-    
+
         return redirect()->route('flashcards.index')
             ->with('success', 'Flashcard created successfully.');
     }
-    
+
 
     /**
-     * Display the specified flashcard.
+     * Display the specified flashcards.
      *
      * @param  \App\Models\Flashcard  $flashcard
      * @return \Illuminate\Http\Response
      */
-    public function show(Flashcard $flashcard)
+    public function show(Flashcard $card)
     {
-        return view('flashcards.show', compact('flashcard'));
+        return view('flashcards.show', compact('card'));
     }
 
     /**
-     * Show the form for editing the specified flashcard.
+     * Show the form for editing the specified flashcards.
      *
      * @param  \App\Models\Flashcard  $flashcard
      * @return \Illuminate\Http\Response
@@ -82,7 +83,7 @@ class FlashcardController extends Controller
     }
 
     /**
-     * Update the specified flashcard in storage.
+     * Update the specified flashcards in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Flashcard  $flashcard

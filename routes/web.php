@@ -1,11 +1,10 @@
 <?php
 
-use App\Http\Controllers\TagController;
+use App\Http\Controllers\FlashcardController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 
-
-Route::get('/card/{id}', [FlashcardController::class, 'show'])->name('flashcards.show');
+Route::resource('cards', FlashcardController::class);
