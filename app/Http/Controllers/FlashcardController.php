@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Flashcard;
 use Illuminate\Http\Request;
 
+
+
 class FlashcardController extends Controller
 {
     /**
@@ -14,23 +16,34 @@ class FlashcardController extends Controller
      */
     public function index()
     {
-        $flashcards = Flashcard::all();
-        return view('flashcards.index', compact('flashcards'));
+        $cards = Flashcard::all();
+        return view('cards.index', compact('cards'));
     }
 
     /**
-     * Show the form for creating a new flashcards.
+     * Display a listing of the flashcards.
+     *
+     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function show(Flashcard $card)
+    {
+        return view('cards.show', compact('card'));
+    }
+
+    /**
+     * Show the form for creating a new flashcard.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
         $existingTags = Tag::all();
-        return view('flashcards.create', compact('existingTags'));
+        return view('cards.create', compact('existingTags'));
     }
 
     /**
-     * Store a newly created flashcards in storage.
+     * Store a newly created flashcard in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -41,12 +54,12 @@ class FlashcardController extends Controller
             'front' => 'required|string',
             'back' => 'required|string',
         ]);
-
+    
         $flashcard = Flashcard::create([
             'front' => $request->front,
             'back' => $request->back,
         ]);
-
+    
         // Process tags
         $tags = explode(',', $request->tags);
         foreach ($tags as $tagName) {
@@ -54,25 +67,15 @@ class FlashcardController extends Controller
             $tag = Tag::firstOrCreate(['name' => $tagName]);
             $flashcard->tags()->attach($tag);
         }
-
-        return redirect()->route('flashcards.index')
+    
+        return redirect()->route('cards.index')
             ->with('success', 'Flashcard created successfully.');
     }
+    
 
 
     /**
-     * Display the specified flashcards.
-     *
-     * @param  \App\Models\Flashcard  $flashcard
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Flashcard $card)
-    {
-        return view('flashcards.show', compact('card'));
-    }
-
-    /**
-     * Show the form for editing the specified flashcards.
+     * Show the form for editing the specified flashcard.
      *
      * @param  \App\Models\Flashcard  $flashcard
      * @return \Illuminate\Http\Response
@@ -83,7 +86,7 @@ class FlashcardController extends Controller
     }
 
     /**
-     * Update the specified flashcards in storage.
+     * Update the specified flashcard in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Flashcard  $flashcard
