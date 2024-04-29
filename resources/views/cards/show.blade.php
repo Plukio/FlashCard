@@ -19,7 +19,7 @@
                 <div class="details">
                     <p>{{ $card->back }}</p>
                 </div>
-                <div class="answer-buttons">
+                <div class="answer-buttons" style="justify-content: center;">
                     <button onclick="answer('hard')">Hard</button>
                     <button onclick="answer('medium')">Medium</button>
                     <button onclick="answer('easy')">Easy</button>
@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="button-group"> 
+        <div class="button-group" style="margin: 150px;"> 
   <button class="button button-black-yellow button-edit" onclick="location.href='{{ route('cards.create') }}'">
     <i class="fas fa-edit"></i> 
     <i class="fas fa-plus"></i> Create
@@ -51,9 +51,6 @@
             flashcard.classList.toggle('flip');
         }
 
-        function answer(difficulty) {
-        // ---------- ask Nico      
-        }
     </script>
 </body>
 </html>
