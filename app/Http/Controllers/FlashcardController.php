@@ -126,9 +126,7 @@ public function update(Request $request, Flashcard $card)
     foreach ($tags as $tagName) {
         $tagName = trim($tagName);
         $tag = Tag::firstOrCreate(['name' => $tagName]);
-        if (!in_array($tag->id, $currentTagIds)) {
-            $newTags[] = $tag->id;
-        }
+        $newTags[] = $tag->id;
     }
 
     $card->tags()->sync($newTags); // This is from chatgpt very genius way yo deal with when user add new tag 
