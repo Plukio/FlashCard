@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Flashcard;
 use Illuminate\Http\Request;
+use App\Models\Tag;
 
 
 
@@ -28,6 +29,7 @@ class FlashcardController extends Controller
      */
     public function show(Flashcard $card)
     {
+
         return view('cards.show', compact('card'));
     }
 
@@ -38,8 +40,7 @@ class FlashcardController extends Controller
      */
     public function create()
     {
-        $existingTags = Tag::all();
-        return view('cards.create', compact('existingTags'));
+        return view('cards.create');
     }
 
     /**
@@ -50,6 +51,13 @@ class FlashcardController extends Controller
      */
     public function store(Request $request)
     {
+
+
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'You must be logged in to create a flashcard.');
+        }
+
+
         $request->validate([
             'front' => 'required|string',
             'back' => 'required|string',
@@ -58,9 +66,9 @@ class FlashcardController extends Controller
         $flashcard = Flashcard::create([
             'front' => $request->front,
             'back' => $request->back,
+            'user_id' => auth()->id(),
         ]);
     
-        // Process tags
         $tags = explode(',', $request->tags);
         foreach ($tags as $tagName) {
             $tagName = trim($tagName);
@@ -80,39 +88,52 @@ class FlashcardController extends Controller
      * @param  \App\Models\Flashcard  $flashcard
      * @return \Illuminate\Http\Response
      */
-    public function edit(Flashcard $flashcard)
+    public function edit(Flashcard $card)
     {
-        return view('flashcards.edit', compact('flashcard'));
+        return view('cards.edit', compact('card'));
     }
 
-    /**
-     * Update the specified flashcard in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Flashcard  $flashcard
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Flashcard $flashcard)
+    public function destroy(Flashcard $card)
     {
-        $request->validate([
-            'front' => 'required|string',
-            'back' => 'required|string',
-        ]);
+        $card->delete();
+        return redirect()->route('cards.index')
+             ->with('success', 'Card deleted successfully.');
+    }
 
-        $flashcard->update([
-            'front' => $request->front,
-            'back' => $request->back,
-        ]);
+/**
+ * Update the specified flashcard in storage.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ * @param  \App\Models\Flashcard  $card 
+ * @return \Illuminate\Http\Response
+ */
+public function update(Request $request, Flashcard $card)
+{
+    $request->validate([
+        'front' => 'required|string',
+        'back' => 'required|string',
+    ]);
 
-        // Process tags
-        $tags = explode(',', $request->tags);
-        $flashcard->tags()->detach(); // Remove all existing tags
-        foreach ($tags as $tagName) {
-            $tagName = trim($tagName);
-            $tag = Tag::firstOrCreate(['name' => $tagName]);
-            $flashcard->tags()->attach($tag);
+    $card->update([
+        'front' => $request->front,
+        'back' => $request->back,
+    ]);
+
+    $tags = explode(',', $request->tags);
+    $currentTagIds = $card->tags->pluck('id')->toArray();
+    $newTags = [];
+
+    foreach ($tags as $tagName) {
+        $tagName = trim($tagName);
+        $tag = Tag::firstOrCreate(['name' => $tagName]);
+        if (!in_array($tag->id, $currentTagIds)) {
+            $newTags[] = $tag->id;
         }
-
-        return redirect()->route('flashcards.index')->with('success', 'Flashcard updated successfully.');
     }
+
+    $card->tags()->sync($newTags); // This is from chatgpt very genius way yo deal with when user add new tag 
+
+    return redirect()->route('cards.index')->with('success', 'Flashcard updated successfully.');
+}
+
 }

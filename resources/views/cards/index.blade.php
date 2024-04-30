@@ -1,13 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'List of Flashcards')
+
+@section('title', 'Flashcards')
 
 @section('content')
-<div style="width: 100%; max-width: 1000px; margin: 30px auto; padding: 20px; background-color: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: relative; overflow: hidden;">
-    <div style="position: absolute; top: 20px; right: 20px;">
+
+<div style="width: 100%; max-width: 1000px; margin: 30px auto; padding: 0px 20px 20px 20px; background-color: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: relative; overflow: hidden;">
+    <div>
+        <div style="position: absolute; top: 27px; right: 20px;">
         <a href="{{ route('cards.create') }}" style="padding: 10px 20px; background-color: #28a745; color: #ffffff; text-decoration: none; border-radius: 5px;">Create Flashcard</a>
     </div>
-    <h1 style="color: #333; padding-right: 160px;">Flashcards</h1>
+    <div>
+    <h1 style="color: #333; top: 20px; right: 20px; ">Flashcards</h1>
+    </div>
     <div style="display: flex; overflow-x: auto; gap: 20px; padding-bottom: 10px;">
         @foreach ($cards as $card)
             <div onclick="location.href='{{ route('cards.show', ['card' => $card->id]) }}'"style="width: 400px; height: 200px; flex: 0 0 auto; padding: 15px; border: 1px solid #ccc; border-radius: 5px; position: relative; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;">

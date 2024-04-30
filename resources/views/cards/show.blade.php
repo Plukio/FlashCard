@@ -27,12 +27,12 @@
             </div>
         </div>
 
-        <div class="button-group" style="margin: 150px;"> 
-  <button class="button button-black-yellow button-edit" onclick="location.href='{{ route('cards.create') }}'">
+        <div class="button-group" style="margin: 100px;"> 
+  <button class="button button-black-yellow button-edit" onclick="location.href='{{ route('cards.create')}}'">
     <i class="fas fa-edit"></i> 
     <i class="fas fa-plus"></i> Create
   </button>
-  <button class="button button-black-yellow" onclick="location.href='{{ route('cards.create') }}'">
+  <button class="button button-black-yellow" onclick="location.href='{{ route('cards.edit', $card) }}'">
     <i class="fas fa-plus"></i> Edit
   </button>
   <button class="button button-black-yellow" onclick="location.href='{{ route('cards.index') }}'">

@@ -11,8 +11,26 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
             margin: 0;
+        }
+
+        .navbox {
+        position: fixed;
+        flex-direction: row;
+        margin: 20px 20px;
+        top: 0;
+        left: 0;
+        right: 0;
+        }
+
+        .User-name {
+        position: fixed;
+        flex-direction: row;
+        margin: 20px 20px;
+        top: 9px;
+        left: 100px;
         }
 
         .flashcard-container {
@@ -54,6 +72,7 @@
             align-items: center;
             box-sizing: border-box;
         }
+
 
         .back {
             transform: rotateY(180deg);
@@ -127,6 +146,16 @@
         margin: 30px 20px;
         }
 
+        .login-logout-botton {
+        background-color: black;
+        border: none; 
+        color: #FFA500;
+        border-radius: 50px; 
+        padding: 10px 20px;
+        cursor: pointer; 
+       
+        }
+
         .button-group {
         display: flex; 
         gap: 10px; 
@@ -135,8 +164,38 @@
 
     </style>
 </head>
+
 <body>
+
+<div>
+    @if(Auth::check())  <!-- Check if user is logged in -->
+        <div class="User-name" style="flex-direction: row">
+            <div class="user-name">
+                {{ Auth::user()->name }} <!-- Display the logged-in user's name -->
+            </div>
+        </div>
+        
+        <div class="navbox" style="flex-direction: row">
+            <div>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button onclick="location.href='{{ route('logout') }}'" type="submit" class="login-logout-botton">Log Out</a> 
+                </form>
+            </div>
+        </div>
+    @else  <!-- If user is not logged in -->
+        <div class="navbox" style="flex-direction: row">
+            <div>
+                <button onclick="location.href='{{ route('login') }}'" type="submit" class="login-logout-botton">Log In</a> 
+            </div>
+        </div>
+    @endif
+</div>
+
+
+<div class="content">
     @yield('content')
+</div>
 
     <script>
         function flip() {
