@@ -13,6 +13,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/complete', function () {
+    return view('complete');
+});
+
 Route::resource('cards', FlashcardController::class);
 Route::resource('answers', AnswerController::class);
 Route::resource('tags', TagController::class);
