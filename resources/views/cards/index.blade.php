@@ -11,7 +11,7 @@
         <a href="{{ route('cards.create') }}" style="padding: 10px 20px; background-color: #28a745; color: #ffffff; text-decoration: none; border-radius: 5px;">Create Flashcard</a>
     </div>
     <div>
-    <h1 style="color: #333; top: 20px; right: 20px; ">Flashcards</h1>
+    <h1 style="color: #333; top: 20px; right: 20px; ">My Flashcards</h1>
     </div>
     <div style="display: flex; overflow-x: auto; gap: 20px; padding-bottom: 10px;">
         @foreach ($cards as $card)

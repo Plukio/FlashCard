@@ -17,7 +17,9 @@ class FlashcardController extends Controller
      */
     public function index()
     {
-        $cards = Flashcard::all();
+        $userId = auth()->user()->id; 
+        $cards = Flashcard::where('user_id', $userId)->get();
+         
         return view('cards.index', compact('cards'));
     }
 
