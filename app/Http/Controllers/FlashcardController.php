@@ -36,6 +36,18 @@ class FlashcardController extends Controller
         return view('cards.show', compact('card'));
     }
 
+        /**
+     * Display a listing of the flashcards.
+     *
+     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function normal_show(Flashcard $card)
+    {
+
+        return view('cards.normal-show', compact('card'));
+    }
+
     /**
      * Show the form for creating a new flashcard.
      *

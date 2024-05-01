@@ -18,6 +18,7 @@ Route::resource('answers', AnswerController::class);
 Route::resource('tags', TagController::class);
 Route::post('/study', [FlashcardController::class, 'study'])->name('study');
 Route::post('/study/continue', [FlashcardController::class, 'continueStudy'])->name('study.continue');
+Route::get('cards/{card}/normal-show', [FlashcardController::class, 'normal_show'])->name('cards.normal_show');
 
 
 
