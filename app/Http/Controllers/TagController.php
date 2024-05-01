@@ -10,7 +10,12 @@ class TagController extends Controller
 {
     public function index()
     {
-        $tags = Tag::all();
+        $userId = auth()->id();
+
+        $tags = Tag::whereHas('flashcards', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->get();
+
         return view('tags.index', compact('tags'));
     }
 
