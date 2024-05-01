@@ -8,7 +8,8 @@
 <div style="width: 100%; max-width: 1000px; margin: 30px auto; padding: 0px 20px 20px 20px; background-color: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: relative; overflow: hidden;">
     <div>
         <div style="position: absolute; top: 27px; right: 20px;">
-        <a href="{{ route('cards.create') }}" style="padding: 10px 20px; background-color: #28a745; color: #ffffff; text-decoration: none; border-radius: 5px;">Create Flashcard</a>
+        <a href="{{ route('cards.create') }}" style="padding: 10px 20px; background-color: #28a745; color: #ffffff; text-decoration: none; border-radius: 5px;">New card</a>
+        <a href="{{ route('tags.index') }}" style="padding: 10px 20px; margin: 10px 0px 10px 10px; background-color: #28a745; color: #ffffff; text-decoration: none; border-radius: 5px;">Study</a>
     </div>
     <div>
     <h1 style="color: #333; top: 20px; right: 20px; ">My Flashcards</h1>
