@@ -101,15 +101,15 @@
         }
 
         .answer-buttons button {
-            width: 100%;
+            width: 100px;
             padding: 10px 10px;
             background-color: #000;
             color: #FFA500;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-left: 5px;
-            margin-right: 5px;
+            margin-left: 0px;
+            margin-right: 0px;
             font-size: 16px;
             border-radius: 30px; 
         }
@@ -144,7 +144,7 @@
             padding: 10px 20px;
             border-radius: 50px; 
             cursor: pointer; 
-            margin: 30px 20px;
+            margin: 20px 20px;
         }
 
         .login-logout-botton {
@@ -159,8 +159,55 @@
 
         .button-group {
             display: flex; 
-            gap: 10px; 
+            gap: 0px; 
             justify-content: center;
+        }
+   
+
+        .chip {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 2px solid #ccc;
+            border-radius: 25px;
+            background-color: #f7f7f7;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+            position: relative;
+        }
+
+        .chip-input {
+            opacity: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .chip:hover {
+            background-color: #e0e0e0;
+            border-color: #b0b0b0;
+        }
+
+        .chip-input:checked + .chip {
+            background-color: #6200ea; /* Fuchsia like color */
+            color: white; /* Change text color to enhance visibility */
+        }
+
+        .btn-submit {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-submit:hover {
+            background-color: #45a049;
         }
 
     </style>

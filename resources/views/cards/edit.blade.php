@@ -21,7 +21,7 @@
 
         <div class="form-group" style="margin-bottom: 20px;">
             <label for="tags">Tags (comma separated):</label>
-            <!-- Assuming tags are loaded as an array of tag names -->
+
             <input type="text" name="tags" id="tags" class="input-field" placeholder="Tag1, Tag2, Tag3" value="{{ implode(', ', $card->tags->pluck('name')->toArray()) }}">
         </div>
 
