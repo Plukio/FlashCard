@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Tag;
 use Carbon\Carbon;
 use App\Models\Answer;
+use Illuminate\Support\Facades\DB; 
 
 
 
@@ -20,8 +21,16 @@ class FlashcardController extends Controller
     public function index()
     {
         $userId = auth()->user()->id; 
-        $cards = Flashcard::where('user_id', $userId)->get();
-
+        $cards = Flashcard::where('user_id', $userId)
+                          ->get();
+    
+        $additionalCards = Flashcard::whereIn('id', [15, 16])
+                                    ->get();
+    
+        $cards = $cards->merge($additionalCards);
+    
+        $cards = $cards->sortByDesc('created_at'); 
+    
         return view('cards.index', compact('cards'));
     }
 
@@ -147,7 +156,7 @@ class FlashcardController extends Controller
             $newTags[] = $tag->id;
         }
 
-        $card->tags()->sync($newTags); // This is from chatgpt very genius way yo deal with when user add new tag 
+        $card->tags()->sync($newTags); 
 
         return redirect()->route('cards.index')->with('success', 'Flashcard updated successfully.');
     }
@@ -168,21 +177,14 @@ class FlashcardController extends Controller
     
         $flashcards = Flashcard::whereHas('tags', function ($query) use ($tags) {
             $query->whereIn('tags.id', $tags);
-        })->with(['answers' => function ($query) {
-            $query->where('created_at', '>=', Carbon::now()->subHours(3));
-        }])->get();
+        })->get();
     
-        $filteredCards = $flashcards->filter(function ($card) {
-            return $card->answers->isEmpty() || !$card->answers->every(function ($answer) {
-                return $answer->answer === 'easy';
-            });
-        });
     
-        if ($filteredCards->isEmpty()) {
+        if ($flashcards->isEmpty()) {
             return redirect()->back()->with('info', 'No cards available to study at this moment.');
         }
     
-        $card = $filteredCards->random();
+        $card = $flashcards->random();
     
         return redirect()->route('cards.show', [
             'card' => $card->id,
@@ -207,29 +209,30 @@ class FlashcardController extends Controller
             'difficulty_level' => $request->difficulty_level,
         ]);
 
-        $flashcards = Flashcard::whereHas('tags', function ($query) use ($tags) {
-            $query->whereIn('id', $tags);
-        })->with(['latestAnswer' => function ($query) {
-            $query->latest()->take(1);
-        }, 'recentAnswers' => function ($query) {
-            $query->where('created_at', '>=', now()->subHours(3));
-        }])->get();
-    
-        $filteredCards = $flashcards->filter(function ($card) {
-            if ($card->answers->isEmpty()) {
-                return true;
-            }
-            return !$card->answers->every(function ($answer) {
-                return $answer->answer === 'easy';
-            });
+        $flashcardsWithTags = Flashcard::whereHas('tags', function ($query) use ($tags) {
+            $query->whereIn('tags.id', $tags); 
+        })
+        ->get();
+
+        $filteredFlashcards = $flashcardsWithTags->filter(function ($flashcard) {
+            return $flashcard->answers()
+                            ->where('difficulty_level', 'easy')
+                            ->where('created_at', '>=', Carbon::now()->subMinutes(5))
+                            ->where('flashcard_id', $flashcard->id) 
+                            ->count() < 2;
         });
-    
-        if ($filteredCards->isEmpty()) {
-            session()->forget('tags');  
-            return redirect()->back()->with('success', 'You have mastered all selected flashcards.');
+        
+        $filteredFlashcards = $filteredFlashcards->where('id', '!=', $request->flashcard_id);
+
+
+        if ($filteredFlashcards->isEmpty()) {
+            session()->forget('tags'); 
+            return redirect()->route('complete');
         }
+
+        
     
-        $card = $filteredCards->random();
+        $card = $filteredFlashcards->random();
 
         return  redirect()->route('cards.show', [
             'card' => $card->id,
