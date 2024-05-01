@@ -17,20 +17,20 @@
         }
 
         .navbox {
-        position: fixed;
-        flex-direction: row;
-        margin: 20px 20px;
-        top: 0;
-        left: 0;
-        right: 0;
+            position: fixed;
+            flex-direction: row;
+            margin: 20px 20px;
+            top: 0;
+            left: 0;
+            right: 0;
         }
 
         .User-name {
-        position: fixed;
-        flex-direction: row;
-        margin: 20px 20px;
-        top: 9px;
-        left: 100px;
+            position: fixed;
+            flex-direction: row;
+            margin: 20px 20px;
+            top: 9px;
+            left: 100px;
         }
 
         .flashcard-container {
@@ -97,10 +97,11 @@
             width: 100%;
             position: absolute;
             bottom: 20px;
+            margin: 10px 10px;
         }
 
         .answer-buttons button {
-            width: 25%;
+            width: 100%;
             padding: 10px 10px;
             background-color: #000;
             color: #FFA500;
@@ -137,29 +138,29 @@
         }
 
         .button-black-yellow {
-        background-color: black;
-        border: none; 
-        color: #FFA500;
-        padding: 10px 20px;
-        border-radius: 50px; 
-        cursor: pointer; 
-        margin: 30px 20px;
+            background-color: black;
+            border: none; 
+            color: #FFA500;
+            padding: 10px 20px;
+            border-radius: 50px; 
+            cursor: pointer; 
+            margin: 30px 20px;
         }
 
         .login-logout-botton {
-        background-color: black;
-        border: none; 
-        color: #FFA500;
-        border-radius: 50px; 
-        padding: 10px 20px;
-        cursor: pointer; 
+            background-color: black;
+            border: none; 
+            color: #FFA500;
+            border-radius: 50px; 
+            padding: 10px 20px;
+            cursor: pointer; 
        
         }
 
         .button-group {
-        display: flex; 
-        gap: 10px; 
-        justify-content: center;
+            display: flex; 
+            gap: 10px; 
+            justify-content: center;
         }
 
     </style>
@@ -168,10 +169,10 @@
 <body>
 
 <div>
-    @if(Auth::check())  <!-- Check if user is logged in -->
+    @if(Auth::check()) 
         <div class="User-name" style="flex-direction: row">
             <div class="user-name">
-                {{ Auth::user()->name }} <!-- Display the logged-in user's name -->
+                {{ Auth::user()->name }}
             </div>
         </div>
         
@@ -183,7 +184,7 @@
                 </form>
             </div>
         </div>
-    @else  <!-- If user is not logged in -->
+    @else  
         <div class="navbox" style="flex-direction: row">
             <div>
                 <button onclick="location.href='{{ route('login') }}'" type="submit" class="login-logout-botton">Log In</a> 
