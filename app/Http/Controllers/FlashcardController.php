@@ -21,16 +21,28 @@ class FlashcardController extends Controller
     public function index()
     {
         $userId = auth()->user()->id; 
+    
+        // Fetch and check user's cards
         $cards = Flashcard::where('user_id', $userId)
                           ->get();
     
-        $additionalCards = Flashcard::whereIn('id', [15, 16])
-                                    ->get();
+        if ($cards->isEmpty()) {
+            Flashcard::create([
+                'user_id' => $userId,
+                'front' => 'How to start studying flashcards?',
+                'back' => 'Click "Study" and select tags you want to study.',
+            ]);
     
-        $cards = $cards->merge($additionalCards);
+            Flashcard::create([
+                'user_id' => $userId,
+                'front' => 'How to edit a flashcard?',
+                'back' => 'Click to the flashcard you wish to edit, then you will be see the edit button.',
+            ]);
+        }
+        
+        $cards = Flashcard::where('user_id', $userId)->get(); 
     
         $cards = $cards->sortByDesc('created_at'); 
-    
         return view('cards.index', compact('cards'));
     }
 
