@@ -15,7 +15,7 @@ Route::get('/', function () {
 
 Route::get('/complete', function () {
     return view('complete');
-});
+})->name('complete');
 
 Route::resource('cards', FlashcardController::class);
 Route::resource('answers', AnswerController::class);
