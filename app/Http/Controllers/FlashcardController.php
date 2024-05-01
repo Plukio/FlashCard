@@ -6,6 +6,7 @@ use App\Models\Flashcard;
 use Illuminate\Http\Request;
 use App\Models\Tag;
 use Carbon\Carbon;
+use App\Models\Answer;
 
 
 
@@ -24,19 +25,21 @@ class FlashcardController extends Controller
         return view('cards.index', compact('cards'));
     }
 
-    /**
-     * Display a listing of the flashcards.
+   /**
+     * Display the specified flashcard with potentially selected tags for context.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Flashcard  $card
      * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function show(Flashcard $card)
+    public function show(Flashcard $card, Request $request)
     {
+        $tags = $request->input('tags', []);
 
-        return view('cards.show', compact('card'));
+        return view('cards.show', compact('card', 'tags'));
     }
 
-        /**
+    /**
      * Display a listing of the flashcards.
      *
      * @return \Illuminate\Http\Response
@@ -181,7 +184,10 @@ class FlashcardController extends Controller
     
         $card = $filteredCards->random();
     
-        return redirect()->route('cards.show', ['card' => $card->id, 'tags' => $tags]);
+        return redirect()->route('cards.show', [
+            'card' => $card->id,
+            'tags' => $tags  
+        ]);
     }
 
 
@@ -198,21 +204,36 @@ class FlashcardController extends Controller
         Answer::create([
             'flashcard_id' => $request->flashcard_id,
             'user_id' => auth()->id(),
-            'answer' => $request->difficulty_level,
+            'difficulty_level' => $request->difficulty_level,
         ]);
 
         $flashcards = Flashcard::whereHas('tags', function ($query) use ($tags) {
             $query->whereIn('id', $tags);
-        })->whereDoesntHave('answers', function ($query) {
-            $query->where('created_at', '>=', Carbon::now()->subHours(3))->where('answer', 'easy');
-        })->with('answers')->get();
-
-        if ($flashcards->isEmpty()) {
-            return redirect()->route('cards.index')->with('success', 'You have completed the study session!');
+        })->with(['latestAnswer' => function ($query) {
+            $query->latest()->take(1);
+        }, 'recentAnswers' => function ($query) {
+            $query->where('created_at', '>=', now()->subHours(3));
+        }])->get();
+    
+        $filteredCards = $flashcards->filter(function ($card) {
+            if ($card->answers->isEmpty()) {
+                return true;
+            }
+            return !$card->answers->every(function ($answer) {
+                return $answer->answer === 'easy';
+            });
+        });
+    
+        if ($filteredCards->isEmpty()) {
+            session()->forget('tags');  
+            return redirect()->back()->with('success', 'You have mastered all selected flashcards.');
         }
+    
+        $card = $filteredCards->random();
 
-        $card = $flashcards->random();
-
-        return redirect()->route('cards.show', ['card' => $card->id, 'tags' => json_encode($tags)]);
+        return  redirect()->route('cards.show', [
+            'card' => $card->id,
+            'tags' => $tags 
+        ]);
     }
 }

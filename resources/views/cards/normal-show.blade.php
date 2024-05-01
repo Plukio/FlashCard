@@ -19,33 +19,7 @@
                 <div class="details">
                     <p>{{ $card->back }}</p>
                 </div>
-                <div class="answer-buttons" style="justify-content: center;">
-
-                <form method="POST" action="{{ route('study.continue') }}" style = "margin: 40px 30px 0px 30px;"> 
-                    @csrf
-                    <input type="hidden" name="flashcard_id" value="{{ $card->id }}">
-                    <input type="hidden" name="tags" value="{{ json_encode($tags) }}">
-                    <input type="hidden" name="difficulty_level" value="hard">
-                    <button >Hard</button> 
-                </form> 
-
-                <form method="POST" action="{{ route('study.continue') }}" style = "margin: 40px 30px 0px 30px;"> 
-                    @csrf
-                    <input type="hidden" name="flashcard_id" value="{{ $card->id }}">
-                    <input type="hidden" name="tags" value="{{ json_encode($tags) }}">
-                    <input type="hidden" name="difficulty_level" value="medium">
-                    <button >Medium</button> 
-                </form> 
-
-                <form method="POST" action="{{ route('study.continue') }}" style = "margin: 40px 30px 0px 30px;"> 
-                    @csrf
-                    <input type="hidden" name="flashcard_id" value="{{ $card->id }}">
-                    <input type="hidden" name="tags" value="{{ json_encode($tags) }}">
-                    <input type="hidden" name="difficulty_level" value="easy">
-                    <button>Easy</button> 
-                </form> 
-
-                </div>
+            
             </div>
         </div>
 
