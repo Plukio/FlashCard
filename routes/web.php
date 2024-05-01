@@ -30,7 +30,7 @@ Route::get('normal-show/{card}/', [FlashcardController::class, 'normal_show'])->
 
 
 Route::get('/dashboard', function () {
-    return view('welcome');
+    return redirect()->route('cards.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
