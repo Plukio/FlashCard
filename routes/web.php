@@ -10,6 +10,8 @@ Route::get('/', function () {
 });
 
 Route::resource('cards', FlashcardController::class);
+Route::resource('answers', AnswerController::class);
+
 
 
 Route::get('/dashboard', function () {
