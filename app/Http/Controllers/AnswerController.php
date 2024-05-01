@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Answer;
+
 
 class AnswerController extends Controller
 {
@@ -25,9 +27,14 @@ class AnswerController extends Controller
             'difficulty_level' => 'required|in:easy,medium,hard',
         ]);
 
-        Answer::create($request->all());
+        $flashcard = Answer::create([
+            'difficulty_level' => $request->difficulty_level,
+            'flashcard_id' => $request->flashcard_id,
+            'user_id' => auth()->id(),
+        ]);
+    
 
-        return redirect()->route('answers.index')
+        return redirect()->route('cards.show', ['card' => $request->flashcard_id])
             ->with('success', 'Answer created successfully.');
     }
 
