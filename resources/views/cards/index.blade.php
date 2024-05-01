@@ -16,7 +16,7 @@
     </div>
     <div style="display: flex; overflow-x: auto; gap: 20px; padding-bottom: 10px;">
         @foreach ($cards as $card)
-            <div onclick="location.href='{{ route('cards.show', ['card' => $card->id]) }}'"style="width: 400px; height: 200px; flex: 0 0 auto; padding: 15px; border: 1px solid #ccc; border-radius: 5px; position: relative; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;">
+            <div onclick="location.href='{{ route('cards.normal_show', ['card' => $card->id]) }}'" style="width: 400px; height: 200px; flex: 0 0 auto; padding: 15px; border: 1px solid #ccc; border-radius: 5px; position: relative; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;">
                 <div>
                 <div style="display: inline-block; padding: 5px 0px;">
                         @foreach ($card->tags as $tag)
