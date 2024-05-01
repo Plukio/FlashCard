@@ -20,15 +20,34 @@
                     <p>{{ $card->back }}</p>
                 </div>
                 <div class="answer-buttons" style="justify-content: center;">
-                    <button onclick="answer('hard')">Hard</button>
-                    <button onclick="answer('medium')">Medium</button>
-                    <button onclick="answer('easy')">Easy</button>
+
+                <form method="POST" action="{{ route('answers.store') }}" style = "margin: 20px;"> 
+                    @csrf
+                    <input type="hidden" name="flashcard_id" value="{{ $card->id }}">
+                    <input type="hidden" name="difficulty_level" value="hard">
+                    <button >Hard</button> 
+                </form> 
+
+                <form method="POST" action="{{ route('answers.store') }}" style = "margin: 20px;" > 
+                    @csrf
+                    <input type="hidden" name="flashcard_id" value="{{ $card->id }}">
+                    <input type="hidden" name="difficulty_level" value="medium">
+                    <button >Medium</button> 
+                </form> 
+
+                <form method="POST" action="{{ route('answers.store') }}" style = "margin: 20px;" > 
+                    @csrf
+                    <input type="hidden" name="flashcard_id" value="{{ $card->id }}">
+                    <input type="hidden" name="difficulty_level" value="easy">
+                    <button>Easy</button> 
+                </form> 
+
                 </div>
             </div>
         </div>
 
         <div class="button-group" style="margin: 100px;"> 
-  <button class="button button-black-yellow button-edit" onclick="location.href='{{ route('cards.create')}}'">
+  <button class="button button-black-yellow" onclick="location.href='{{ route('cards.create')}}'">
     <i class="fas fa-edit"></i> 
     <i class="fas fa-plus"></i> Create
   </button>

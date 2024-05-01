@@ -19,7 +19,7 @@ class FlashcardController extends Controller
     {
         $userId = auth()->user()->id; 
         $cards = Flashcard::where('user_id', $userId)->get();
-         
+
         return view('cards.index', compact('cards'));
     }
 
