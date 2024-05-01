@@ -16,6 +16,10 @@ Route::get('/', function () {
 Route::resource('cards', FlashcardController::class);
 Route::resource('answers', AnswerController::class);
 Route::resource('tags', TagController::class);
+Route::post('/study', [FlashcardController::class, 'study'])->name('study');
+Route::post('/study/continue', [FlashcardController::class, 'continueStudy'])->name('study.continue');
+
+
 
 
 
