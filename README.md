@@ -15,7 +15,7 @@ This flashcard application is designed to help users create and study flashcards
 
 - Laravel: Framework used for server-side logic.
 - MySQL: Database for storing user data and flashcards.
-- Bootstrap: For styling the front-end components.
+- CSS: For styling the front-end components.
 
 ## Installation
 - Before any steps: install Laravel --> https://laravel.com/docs/11.x/installation
