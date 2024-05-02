@@ -21,7 +21,7 @@ This flashcard application is designed to help users create and study flashcards
 - Before any steps: install Laravel --> https://laravel.com/docs/11.x/installation
 1. **Clone the repository:**
    ``` bash
-   mkdr flashcard
+   mkdir flashcard
    cd flashcard
    git clone https://github.com/Plukio/FlashCard.git
 
