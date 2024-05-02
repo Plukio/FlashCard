@@ -187,16 +187,16 @@ class FlashcardController extends Controller
             return redirect()->back()->with('error', 'No tags selected for studying.');
         }
     
-        $flashcards = Flashcard::whereHas('tags', function ($query) use ($tags) {
+        $flashcardsWithTags = Flashcard::whereHas('tags', function ($query) use ($tags) {
             $query->whereIn('tags.id', $tags);
         })->get();
     
     
-        if ($flashcards->isEmpty()) {
+        if ($flashcardsWithTags->isEmpty()) {
             return redirect()->back()->with('info', 'No cards available to study at this moment.');
         }
     
-        $card = $flashcards->random();
+        $card = $flashcardsWithTags->random();
     
         return redirect()->route('cards.show', [
             'card' => $card->id,
@@ -223,8 +223,7 @@ class FlashcardController extends Controller
 
         $flashcardsWithTags = Flashcard::whereHas('tags', function ($query) use ($tags) {
             $query->whereIn('tags.id', $tags); 
-        })
-        ->get();
+        })->get();
 
         $filteredFlashcards = $flashcardsWithTags->filter(function ($flashcard) {
             return $flashcard->answers()
