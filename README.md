@@ -42,7 +42,10 @@ This flashcard application is designed to help users create and study flashcards
    ``` bash
    php artisan migrate --seed
 
-6. **Start the application:**
+6. **Start the application (development server):**
    ``` bash
-   php artisan serve
+   npm run dev
+
+7. **Try it out:**
+   go to http://flashcard.test/
 
