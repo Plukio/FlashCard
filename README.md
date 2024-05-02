@@ -18,7 +18,7 @@ This flashcard application is designed to help users create and study flashcards
 - Bootstrap: For styling the front-end components.
 
 ## Installation
-
+- Before any steps: install Laravel --> https://laravel.com/docs/11.x/installation
 1. **Clone the repository:**
    ``` bash
    mkdr flashcard
