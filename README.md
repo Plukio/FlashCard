@@ -28,8 +28,6 @@ This flashcard application is designed to help users create and study flashcards
 2. **Install Dependencies:**
    ``` bash
    composer install
-   npm install
-   npm run dev
 
 3. **Generate an application key:**
    ``` bash
