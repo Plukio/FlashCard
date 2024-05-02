@@ -29,15 +29,20 @@ This flashcard application is designed to help users create and study flashcards
    ``` bash
    composer install
 
-3. **Generate an application key:**
+
+3. **Add .env file:**
+   ``` bash
+   cp .env.example .env
+
+4. **Generate an application key:**
    ``` bash
    php artisan key:generate
 
-4. **Run database migrations and seeders (generate syntactic data):**
+5. **Run database migrations and seeders (generate syntactic data):**
    ``` bash
    php artisan migrate --seed
 
-5. **Start the application:**
+6. **Start the application:**
    ``` bash
    php artisan serve
 
