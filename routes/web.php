@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FlashcardController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\TagController;
-
+use App\Http\Controllers\InitialCardController;
 
 
 
@@ -23,6 +23,8 @@ Route::resource('tags', TagController::class);
 Route::post('/study', [FlashcardController::class, 'study'])->name('study');
 Route::post('/study/continue', [FlashcardController::class, 'continueStudy'])->name('study.continue');
 Route::get('normal-show/{card}/', [FlashcardController::class, 'normal_show'])->name('cards.normal_show');
+Route::get('/initial-cards', [InitialCardController::class, 'initialCard'])->name('initial-cards');
+
 
 
 

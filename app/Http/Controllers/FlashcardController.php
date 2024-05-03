@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Tag;
 use Carbon\Carbon;
 use App\Models\Answer;
-use Illuminate\Support\Facades\DB; 
 
 
 
@@ -20,27 +19,10 @@ class FlashcardController extends Controller
      */
     public function index()
     {
-        $userId = auth()->user()->id; 
-    
-        $cards = Flashcard::where('user_id', $userId)
-                          ->get();
-    
-        if ($cards->isEmpty()) {
-            Flashcard::create([
-                'user_id' => $userId,
-                'front' => 'How to start studying flashcards?',
-                'back' => 'Click "Study" and select tags you want to study.',
-            ]);
-    
-            Flashcard::create([
-                'user_id' => $userId,
-                'front' => 'How to edit a flashcard?',
-                'back' => 'Click to the flashcard you wish to edit, then you will be see the edit button.',
-            ]);
-        }
-        
+
+        $userId = auth()->user()->id;
+        app('App\Http\Controllers\InitialCardController')->initialCard();
         $cards = Flashcard::where('user_id', $userId)->get(); 
-    
         $cards = $cards->sortByDesc('created_at'); 
         return view('cards.index', compact('cards'));
     }
