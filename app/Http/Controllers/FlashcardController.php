@@ -19,10 +19,13 @@ class FlashcardController extends Controller
      */
     public function index()
     {
-
         $userId = auth()->user()->id;
-        app('App\Http\Controllers\InitialCardController')->initialCard();
         $cards = Flashcard::where('user_id', $userId)->get(); 
+
+        if ($cards->isEmpty()) {
+            return redirect()->route('initial-cards');
+        }
+    
         $cards = $cards->sortByDesc('created_at'); 
         return view('cards.index', compact('cards'));
     }
