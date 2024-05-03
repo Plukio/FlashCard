@@ -14,7 +14,7 @@ This flashcard application is designed to help users create and study flashcards
 ## Technologies Used
 
 - Laravel: Framework used for server-side logic.
-- MySQL: Database for storing user data and flashcards.
+- SQLite: Database for storing user data and flashcards.
 - CSS: For styling the front-end components.
 
 ## Installation
