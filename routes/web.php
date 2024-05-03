@@ -6,6 +6,8 @@ use App\Http\Controllers\FlashcardController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\InitialCardController;
+use App\Http\Controllers\StudyController;
+
 
 
 
@@ -20,8 +22,8 @@ Route::get('/complete', function () {
 Route::resource('cards', FlashcardController::class);
 Route::resource('answers', AnswerController::class);
 Route::resource('tags', TagController::class);
-Route::post('/study', [FlashcardController::class, 'study'])->name('study');
-Route::post('/study/continue', [FlashcardController::class, 'continueStudy'])->name('study.continue');
+Route::post('/study', [StudyController::class, 'initiateStudy'])->name('study.initiate');
+Route::post('/study/continue', [StudyController::class, 'continueStudy'])->name('study.continue');
 Route::get('normal-show/{card}/', [FlashcardController::class, 'normal_show'])->name('cards.normal_show');
 Route::get('/initial-cards', [InitialCardController::class, 'initialCard'])->name('initial-cards');
 

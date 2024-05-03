@@ -4,7 +4,7 @@
 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 0px 0px 60px 0px">
     <h1 >Select Tags to Study</h1>
 
-    <form action="{{ route('study') }}" method="POST" style=" margin-left: auto; margin-right: auto; width: 100%;">
+    <form action="{{ route('study.initiate') }}" method="POST" style=" margin-left: auto; margin-right: auto; width: 100%;">
         @csrf
         @foreach ($tags as $tag)
             <label class="chip" style="margin: 5px; align-items: center;" >
