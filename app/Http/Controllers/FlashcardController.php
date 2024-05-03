@@ -22,7 +22,6 @@ class FlashcardController extends Controller
     {
         $userId = auth()->user()->id; 
     
-        // Fetch and check user's cards
         $cards = Flashcard::where('user_id', $userId)
                           ->get();
     

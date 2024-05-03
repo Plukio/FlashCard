@@ -192,8 +192,8 @@
         }
 
         .chip-input:checked + .chip {
-            background-color: #6200ea; /* Fuchsia like color */
-            color: white; /* Change text color to enhance visibility */
+            background-color: #6200ea; 
+            color: white;
         }
 
         .btn-submit {
