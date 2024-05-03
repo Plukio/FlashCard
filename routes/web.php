@@ -19,9 +19,10 @@ Route::get('/complete', function () {
     return view('complete');
 })->name('complete');
 
-Route::resource('cards', FlashcardController::class);
+Route::resource('cards', FlashcardController::class)->middleware('auth');
 Route::resource('answers', AnswerController::class);
 Route::resource('tags', TagController::class);
+
 Route::post('/study', [StudyController::class, 'initiateStudy'])->name('study.initiate');
 Route::post('/study/continue', [StudyController::class, 'continueStudy'])->name('study.continue');
 Route::get('normal-show/{card}/', [FlashcardController::class, 'normal_show'])->name('cards.normal_show');
